@@ -1,0 +1,144 @@
+# day03_01
+	
+	2. POST 방식
+		==> 요청정보가 헤더에 포함이 되서 요청하는 방식
+		
+		1) form 태그를 만들어서 요청하는 방법
+			
+			==> 로그인 폼과 같이 사용자가 필요한 것을 입력 또는 선택해서
+				서버에게 전달하는 방식
+				
+			***
+			특징]
+				a.
+				전달할 내용을 반드시 form 태그 안에 만들어야 한다.
+				(<== form 태그 자체를 넘기기 때문에...)
+				만약 어떤 폼이 <form> 태그 안에 있지 않으면
+				그 내용은 서버에 전달되지 않는다.
+				
+				b.
+				서버에서는 전달된 내용을 받아야 하는데..
+				이때 name 이라는 속성값을 키값으로 받게 된다.
+				따라서 폼 태그를 만들때는 반드시 name 속성을 지정해야 한다.
+				
+			***
+			참고]
+				이때 반드시 이 폼의 내용을 전달할 도구를 준비한다.
+				이 도구를 우리는 submit( 번역을 하자면 "제출" ) 도구라고 한다.
+				
+				제출도구를 만드는 방법
+					1. html 로 해결하는 방법
+						
+						<input type="submit" value="버튼" >
+						==> 이 태그는 버튼을 만들어주는 태그인데
+							이때 주의해야 할 사항이
+							이 버튼을 클릭하게 되면 폼에 입력한 내용이
+							서버에 제출이 된다.
+							*****
+							이 버튼이 속해있는 form 태그를 제출하게 된다.
+							
+							<form id="frm1" method="POST" action="주소" >
+								<input type="text" id="in1" >
+								<input type="submit" value="btn1" >
+							</form>
+							
+							<form id="frm2" method="POST" action="주소2" >
+								<input type="text" id="in2" >
+								<input type="submit" value="btn2" >
+							</form>
+							
+							이런 경우
+							btn1을 클릭하게 되면
+							frm2는 아무 상관없고 frm1 만 제출하게 된다.
+					
+					***
+					2. javascript 로 해결하는 방법
+						
+						<script>
+							var f = 폼태그 선택;
+							f.submit();
+						</script>
+						
+						<form method="POST" action="주소" >
+							필요한 입력태그
+						</form>
+						
+						참고]
+							중요속성]
+								method	:	폼의 데이터를 서버에게 보내는 방식
+											GET, POST 중 선택하면 된다.
+								action	: 	서버가 받을 문서이름
+								
+						참고]
+							POST 방식은 스트림을 이용해서 서버에게 전달하게 되므로
+							주소칸에 그 내용이 나오지 않게 된다.
+							따라서 GET 방식 보다는 보안에 유리하다.
+							
+			참고]
+				POST 방식으로 데이터를 전송할 때 한글 깨짐을 방지하는 방법
+				서버가 필터링을 이용해서 인코딩을 해줘야 한다.
+				
+				방법]
+					
+					web.xml 을 열어서
+					
+					1. 필터를 만들고
+					
+						<filter>
+							<filter-name>Encoding Filter</filter-name> // 필터의 이름을 정하는 태그
+							<filter-class>en.filter.EncodingUtil</filter-class> // 필터에 사용할 클래스를 지정하는 태그
+							<init-param> // 한글 인코딩 방식을 정하는 태그
+								<param-name>encoding</param-name>
+								<param-value>UTF-8</param-value>
+							</init-param>
+						</filter>
+						
+						==> 이 태그는 web.xml 에서 기본적으로 제공하는 태그이고
+							이 태그를 찾아서 주석을 해제를 해주면 된다.
+					
+					2. 필터를 적용한다.
+						
+						<filter-mapping>
+							<filter-name>Encoding Filter</filter-name>
+							==> 적용할 필터 이름을 지정하는 태그
+								위에서 만든 필터이름을 기술한다.
+							<url-pattern>/*</url-pattern>
+							==>	어떤 요청이 왔을 때 필터를 적용을 할 건지 설정하는 태그
+								모든 요청에 대해서 필터를 적용하고자 한다면
+									/*
+								해주면 모든 요청에 적용이 된다.
+						</filter-mapping>
+						
+						==> 이 부분을 찾아서 주석을 해제준다.
+						
+					*****
+					참고]
+						<form> 태그를 전송할 때
+						모든 태그가 전송이 되는 것이 아니고
+						입력계열 태그만 전송한다.
+							input, textarea, 체크박스등의 태그를 전송을 한다.
+							
+						그런데 화면에 보이는 내용을 전송하는 것이 아니고
+						value 속성에 지정한 내용이 서버에게 전달이 된다.
+						따라서
+						입력태그의 value 속성은 반드시 만들어 줘야 한다.
+						
+						*******
+						만약 입력태그를 전송용도로만 제작을 하고
+						화면에 보이지 않게 하려면
+						type 속성값을 hidden으로 처리하면 된다.
+						
+					참고]
+						만약 같은 폼안에 같은 name이 여러개 존재하는 경우에는
+						모든 데이터가 배열 형식으로 전달된다.
+						
+						따라서 이때는
+							request.getParameterValues(); 
+						함수를 사용해서 전송을 받으면 된다.
+					
+					참고]
+						
+						라디오버튼이나 체크박스 의 경우에는 
+						선택된 내용만 서버에 전달이 된다.
+					
+				
