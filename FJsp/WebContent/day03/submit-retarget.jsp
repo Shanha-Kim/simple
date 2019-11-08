@@ -17,7 +17,10 @@
 		2. POST 방식으로 넘기기
  -->
 <script type="text/javascript">
-
+	$(function(){
+		$('#id').text('<%= request.getParameter("id") %>'); 
+		$('#pw').text('<%= request.getParameter("pw") %>'); 
+	});
 </script>
 </head>
 <body>
