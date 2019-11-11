@@ -39,7 +39,34 @@ public class MemberDAO {
 	// 로그인 처리 전담 함수
 	public int getCnt(String sid, String spw) {
 		int cnt = 0 ;
+		// 커넥션 얻어오고
+		con = db.getCon();
+		// 질의명령 가져오고
+		MemberSQL mSQL = new MemberSQL();
+		String sql = mSQL.getSQL(mSQL.SEL_MEMB_CNT);
 		
+		// PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		
+		try{
+			// 데이터 채우고 질의명령 완성하고
+			pstmt.setString(1, sid);
+			pstmt.setString(2, spw);
+			
+			// 질의명령 보내고 결과받고
+			rs = pstmt.executeQuery();
+			// 데이터 뽑고
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				db.close(rs);
+				db.close(pstmt);
+				db.close(con);
+			} catch(Exception e) {}
+		}
 		return cnt;
 	}
 

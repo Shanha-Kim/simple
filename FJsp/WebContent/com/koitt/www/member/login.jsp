@@ -33,7 +33,7 @@
 				I D : <input type="text" id="id" name="id">
 			</div>
 			<div>
-				PW : <input type="text" id="pw" name="pw">
+				PW : <input type="password" id="pw" name="pw">
 			</div>
 			<input type="button" id="home" value="취소">
 			<input type="submit" id="btn" value="로그인">
