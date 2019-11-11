@@ -1,0 +1,21 @@
+
+1. 회원관련 요청
+	
+	1) 로그인 폼 요청
+		
+		요청내용	:	/member/login.nop
+		파라미터	:	무
+		클래스		:	proj1.member.Login
+		뷰			:	/com/koitt/www/member/login.jsp ( forward 방식 처리 )
+		
+	2) 로그인 처리 요청
+		요청내용	:	/member/loginExec.nop
+		파라미터	: 	id , pw
+		클래스		:	proj1.member.LoginExec
+		뷰			:	
+						처리된 경우 - main.jsp ( redirect 방식 처리 )
+						처리가 안된 경우 -	login.nop ( redirect 방식 처리 )
+	
+	3) 회원가입 폼 요청
+	
+	4) 회원가입 처리 요청
