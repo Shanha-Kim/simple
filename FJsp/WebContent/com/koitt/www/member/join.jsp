@@ -87,7 +87,37 @@
 
 <script type="text/javascript">
 	$(function(){
-		
+		$('#btn').click(function(){
+			var sid = $('#id').val();
+			
+			$.ajax({
+				url : "/member/idCheck.ck",
+				type : "post",
+				dataType : "json",
+				data : {
+					id : sid
+				},
+				success : function(data){
+					var ck = data.cnt;
+					if(ck == 1){
+						// 이미 회원 가입한 사람이 있는 경우
+						$('#id').val("");
+						$('#id_check').attr('class', '');
+						$('#id_check').toggleClass('w3-text-red');
+						$('#id_check').html("### 이미 가입된 아이디입니다. ###");
+					} else {
+						// 아직 해당아이디로 회원가입한 사람이 없는 경우
+						// 따라서 사용할 수 있는 아이디
+						$('#id_check').attr('class', '');
+						$('#id_check').toggleClass('w3-text-green');
+						$('#id_check').html("*** 사용가능한 아이디입니다. ***");
+					}
+				},
+				error : function(){
+					alert('### 통신 에러 ###');
+				}
+			});
+		});
 	});
 </script>
 
@@ -100,10 +130,10 @@
 		<div class="listbox">
 	<form method="POST" action="/member/joinExec.nop">
 		<ul class="ulcl">
-			<li><label for="id">I D</label>
+			<li id="idli"><label for="id">I D</label>
 			<input type="text" id="id" name="id" required class="w3-rest">
 			<input type="button" id="btn" value="idCheck" class="w3-col m2 w3-button">
-			<!-- <p class="pcl" id="id_check" ></p> -->
+			<p class="" id="id_check" ></p>
 			</li>
 			
 			<li><label for="pw">Password</label><input type="password" id="pw" name="pw"  required >

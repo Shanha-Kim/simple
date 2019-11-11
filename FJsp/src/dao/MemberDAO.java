@@ -31,9 +31,11 @@ public class MemberDAO {
 	Statement stmt = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
+	MemberSQL mSQL;
 	
 	public MemberDAO() {
 		db = new DBCP();
+		mSQL = new MemberSQL();
 	}
 	
 	// 로그인 처리 전담 함수
@@ -42,7 +44,6 @@ public class MemberDAO {
 		// 커넥션 얻어오고
 		con = db.getCon();
 		// 질의명령 가져오고
-		MemberSQL mSQL = new MemberSQL();
 		String sql = mSQL.getSQL(mSQL.SEL_MEMB_CNT);
 		
 		// PreparedStatement 가져오고
@@ -67,6 +68,35 @@ public class MemberDAO {
 				db.close(con);
 			} catch(Exception e) {}
 		}
+		return cnt;
+	}
+	
+	// 아이디체크 전담 처리함수
+	public int getIdCnt(String sid) {
+		int cnt = 0 ;
+		// 커넥션 얻어오고
+		con = db.getCon();
+		// 질의 명령 가져오고
+		String sql = mSQL.getSQL(mSQL.SEL_ID_CK);
+		// PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		
+		try {
+			// 질의명령 완성하고
+			pstmt.setString(1, sid);
+			// 질의명령 보내고 결과 받고
+			rs = pstmt.executeQuery();
+			// 데이터 꺼내고
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
 		return cnt;
 	}
 
