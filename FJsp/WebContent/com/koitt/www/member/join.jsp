@@ -95,7 +95,7 @@
 				type : "post",
 				dataType : "json",
 				data : {
-					id : sid
+					"id" : sid
 				},
 				success : function(data){
 					var ck = data.cnt;

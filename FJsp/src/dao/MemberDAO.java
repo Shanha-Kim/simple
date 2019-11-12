@@ -17,6 +17,7 @@ import DB.*;
 import sql.*;
 import vo.*;
 import java.sql.*;
+import java.util.*;
 
 public class MemberDAO {
 	/*
@@ -100,6 +101,82 @@ public class MemberDAO {
 		return cnt;
 	}
 	
+	// 모든 회원의 회원번호, 이름, 전화번호를 조회 전담 처리함수
+	public ArrayList<MemberVO> getMembList(){
+		// 반환해줄 변수 만들고
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		// 커넥션얻고
+		con = db.getCon();
+		
+		// 질의명령가져오고
+		String sql = mSQL.getSQL(mSQL.SEL_MEMB_ALL);
+		
+		// Statement 가져오고
+		stmt = db.getSTMT(con);
+		
+		// 데이터베이스에 질의 보내고 응답 받고
+		try {
+			rs = stmt.executeQuery(sql);
+			
+			// 데이터 뽑아서 리스트에 담고
+			while(rs.next()) {
+				// 매번 한사람의 데이터를 담아야 되므로
+				// 한번 반복할 때 마다 VO 를 하나씩 만들어 준다.
+				MemberVO vo = new MemberVO();
+				vo.setMno(rs.getInt("mno"));
+				vo.setName(rs.getString("name"));
+				vo.setTel(rs.getString("tel"));
+				// 이제 VO 는 데이터가 채워졌고
+				// 리스트에 담자.
+				list.add(vo);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(stmt);
+			db.close(con);
+		}
+		return list;
+	}
+	
+	// 회원 정보 조회 전담 처리 함수
+	public MemberVO getDetail(int mno) {
+		MemberVO vo = new MemberVO();
+		// 할일
+		// 1. 커넥션 얻어오고
+		con = db.getCon();
+		// 2. 질의명령 가져오고
+		String sql = mSQL.getSQL(mSQL.SEL_MEMB_DETAIL);
+		// 3. PreparedStatement 얻어오고
+		pstmt = db.getPSTMT(con, sql);
+		try {
+			// 4. 질의명령 완성하고
+			pstmt.setInt(1, mno);
+			// 5. 질의명령 보내고 결과 받고
+			rs = pstmt.executeQuery();
+			// 데이터 뽑고
+			rs.next();
+			vo.setMno(rs.getInt("mno"));
+			vo.setId(rs.getString("id"));
+			vo.setName(rs.getString("name"));
+			vo.setMail(rs.getString("mail"));
+			vo.setTel(rs.getString("tel"));
+			vo.setJoinDate(rs.getDate("mdate"));
+			vo.setJoinTime(rs.getTime("mdate"));
+			vo.setsDate();
+			vo.setsTime();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		// 6. 데이터 반환하고
+		return vo;
+	}
 	
 	// 회원가입처리 전담함수
 	public int addMemb(MemberVO vo) {

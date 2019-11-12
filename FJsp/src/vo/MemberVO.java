@@ -1,6 +1,8 @@
 package vo;
 
 import java.text.*;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.sql.*;
 /**
  * 이 클래스는 회원정보에 대한 데이터를 저장해서
@@ -24,6 +26,7 @@ public class MemberVO {
 	private Date joinDate;
 	private Time joinTime;
 	private String sDate;
+	private String sTime;
 	
 	public int getMno() {
 		return mno;
@@ -79,10 +82,18 @@ public class MemberVO {
 	public void setsDate(String sDate) {
 		this.sDate = sDate;
 	}
+	public String getsTime() {
+		return sTime;
+	}
+	public void setsTime() {
+		SimpleDateFormat form = new SimpleDateFormat("HH:mm:ss");
+		this.sTime = form.format(joinTime);
+	}
+	public void setsTime(String sTime) {
+		this.sTime = sTime;
+	}
 	public void setsDate() {
-		SimpleDateFormat form1 = new SimpleDateFormat("yyyy-MM-dd");
-		/* SimpleDateFormat form2 = new SimpleDateFormat("HH:mm:ss"); */
-		
-		this.sDate = form1.format(joinDate);
+		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
+		this.sDate = form.format(joinDate);
 	}
 }
