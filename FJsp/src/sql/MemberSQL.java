@@ -4,6 +4,8 @@ public class MemberSQL {
 	public final int SEL_MEMB_CNT 	= 1001;
 	public final int SEL_ID_CK 		= 1002;
 	
+	public final int ADD_MEMB		= 3001;
+	
 	// 코드를 입력하고 실행하면 질의명령을 반환해주는 함수
 	public String getSQL(int code) {
 		StringBuffer buff = new StringBuffer();
@@ -25,6 +27,14 @@ public class MemberSQL {
 			buff.append("	member ");
 			buff.append("WHERE ");
 			buff.append("	m_id = ? ");
+			break;
+		case ADD_MEMB:
+			buff.append("INSERT INTO ");
+			buff.append("	member ");
+			buff.append("VALUES( ");
+			buff.append("	(SELECT NVL(MAX(m_no) + 1, 1001) FROM member), ");
+			buff.append("	?, ?, ?, ?, ?, sysdate ");
+			buff.append(")");
 			break;
 		}
 		

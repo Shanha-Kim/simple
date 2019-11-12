@@ -99,5 +99,40 @@ public class MemberDAO {
 		
 		return cnt;
 	}
-
+	
+	
+	// 회원가입처리 전담함수
+	public int addMemb(MemberVO vo) {
+		int cnt = 0;
+		// 할일
+		// 커넥션 얻어오고
+		con = db.getCon();
+		// 질의명령 얻어오고
+		String sql = mSQL.getSQL(mSQL.ADD_MEMB);
+		// PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		try {
+			// 질의명령 완성하고
+			pstmt.setString(1, vo.getId());
+			pstmt.setString(2, vo.getPw());
+			pstmt.setString(3, vo.getName());
+			pstmt.setString(4, vo.getMail());
+			pstmt.setString(5, vo.getTel());
+			
+			// 질의명령 보내고 함수의 반환값 받고
+			// executeUpdate() 는 실행되면 변경된 데이터의 수를 반환을 해준다.
+			// Insert 명령에서는 데이터가 추가가되면 1을
+			// 추가에 실패를 하면 0을 반환해준다.
+			cnt = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+		// 질의명령 보내고 반환값 받고
+		
+		// 반환값 내보내고...
+		return cnt;
+	}
 }

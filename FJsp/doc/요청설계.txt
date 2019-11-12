@@ -36,3 +36,6 @@
 		전송방식	:	json
 		클래스		:	proj1.member.IdCheck
 		뷰			:	무
+
+		
+		
