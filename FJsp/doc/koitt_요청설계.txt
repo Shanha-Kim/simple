@@ -1,0 +1,40 @@
+# koitt 요청설계 
+# 				- .cls 로 요청이 들어오는 경우 처리해야할 요청 설계
+
+############ 메인페이지 요청 ###########
+1. 메인페이지 폼 요청
+	요청내용	:	/
+	파라미터	:	none
+	컨트롤러	:	main.MainCont
+	뷰			:	/main.jsp
+	
+************* 회원 관련 요청 ***************
+1. 로그인 폼 요청
+	요청내용	:	/member/login.cls
+	파라미터	:	무
+	컨트롤러	:	com.koitt.www.controller.member.LoginForm
+	뷰			:	/com/koitt/www/member/login.jsp
+	
+2. 로그인 처리 요청
+	요청내용	:	/member/loginProc.cls
+	파라미터	:	id, pw
+	컨트롤러	:	com.koitt.www.controller.member.LoginProc
+	뷰			:	
+					성공	- 	/ 					: redirect
+					실패	- 	/member/login.cls 	: redirect
+	
+2. 로그아웃 처리 요청
+	요청내용	:	/member/logout.cls
+	파라미터	:	무
+	컨트롤러	:	com.koitt.www.controller.member.Logout
+	뷰			:	/main
+
+
+	
+	
+=============================================================================
+. 메인페이지 폼 요청
+	요청내용	:
+	파라미터	:
+	컨트롤러	:
+	뷰			:

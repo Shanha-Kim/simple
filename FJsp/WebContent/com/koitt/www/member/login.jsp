@@ -28,7 +28,8 @@
 	<div class="w3-col m3"><p></p></div>
 	<!-- 로그인 폼 페이지 -->
 	<c:if test="${empty SID}">
-		<form method="POST" action="/member/loginExec.nop" id="frm"  class="w3-col m6 w3-center w3-margin-top" >
+<!-- 		<form method="POST" action="/member/loginExec.nop" id="frm"  class="w3-col m6 w3-center w3-margin-top" > -->
+		<form method="POST" action="/member/loginProc.cls" id="frm"  class="w3-col m6 w3-center w3-margin-top" >
 			<div>
 				I D : <input type="text" id="id" name="id">
 			</div>
