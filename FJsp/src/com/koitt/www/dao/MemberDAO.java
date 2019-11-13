@@ -66,6 +66,46 @@ public class MemberDAO {
 		
 		return cnt;
 	}
+	
+	// 회원 상세 정보 전담 처리 함수
+	public MemberVO getMemberInfo(String sid) {
+		MemberVO vo = new MemberVO();
+		// 할일
+		// 1. 커넥션 가져오고
+		con = db.getCon();
+		// 2. 질의명령 가져오고
+		String sql = mSQL.getSQL(mSQL.SEL_MEMB_INFO);
+		// 3. PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		try{
+			// 4. 질의명령 완성하고
+			pstmt.setString(1, sid);
+			// 5. 질의명령 보내고 결과 받고
+			rs = pstmt.executeQuery();
+			// 6. 데이터 꺼내고 VO에 담고
+			// 	한줄내리고
+			rs.next();
+			vo.setMno(rs.getInt("mno"));
+			vo.setId(rs.getString("id"));
+			vo.setName(rs.getString("name"));
+			vo.setMail(rs.getString("mail"));
+			vo.setTel(rs.getString("tel"));
+			vo.setJoinDate(rs.getDate("mdate"));
+			vo.setJoinTime(rs.getTime("mdate"));
+			vo.setsDate();
+			vo.setsTime();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		// 7. 데이터 내보내고
+		return vo;
+	}
 }
 
 

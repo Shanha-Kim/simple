@@ -28,6 +28,15 @@
 	파라미터	:	무
 	컨트롤러	:	com.koitt.www.controller.member.Logout
 	뷰			:	/main
+	
+3. 회원정보보기 처리 요청
+	요청내용	:	/member/membInfo.ck
+	파라미터	:	id
+	데이터타입	: 	json
+	컨트롤러	:	com.koitt.www.controller.member.MemberInfo
+	뷰			:	무
+	
+
 
 
 	
