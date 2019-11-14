@@ -106,6 +106,64 @@ public class MemberDAO {
 		// 7. 데이터 내보내고
 		return vo;
 	}
+	
+	// 회원정보 수정 전담 처리 함수
+	public int memberEdit(MemberVO vo, String code) {
+		int cnt = 0;
+		// 할일
+		// 1. 커넥션 얻어오고
+		con = db.getCon();
+		// 2. 질의명령 얻어오고
+		String sql = mSQL.getSQL(mSQL.EDIT_MEMB_INFO);
+		// 2-1. 질의명령 수정하고 
+		// <-- 우리는 질의 명령중 변경되는 부분을 ### 으로 처리를 해놓았으므로... 
+		String tmp = "";
+		switch(code) {
+		case "1":
+			tmp = "m_mail = ?, m_tel = ?";
+			break;
+		case "2":
+			tmp = "m_mail = ?";
+			break;
+		case "3":
+			tmp = "m_tel = ?";
+			break;
+		}
+		sql = sql.replace("###", tmp);
+		
+		// 3. PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		
+		try {
+			// 4. 질의 명령 완성하고
+			if(code.equals("1")) {
+				pstmt.setString(1, vo.getMail());
+				pstmt.setString(2, vo.getTel());
+				pstmt.setInt(3, vo.getMno());
+			} else {
+				String val = "";
+				if(code.equals("2")) {
+					val = vo.getMail();
+				} else {
+					val = vo.getTel();
+				}
+				
+				pstmt.setString(1, val);
+				pstmt.setInt(2, vo.getMno());
+			}
+			
+			// 5. 질의명령 보내고 결과 받고
+			cnt = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		// 6. 결과 내보내고
+		return cnt;
+	}
 }
 
 

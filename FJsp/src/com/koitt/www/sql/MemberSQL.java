@@ -16,6 +16,8 @@ public class MemberSQL {
 	public final int GET_LOGIN			= 1001;
 	public final int SEL_MEMB_INFO		= 1002;
 	
+	public final int EDIT_MEMB_INFO		= 2001;
+	
 	// 코드를 입력하면 질의명령을 반환해주는 함수
 	public String getSQL(int code) {
 		StringBuffer buff = new StringBuffer();
@@ -38,6 +40,14 @@ public class MemberSQL {
 			buff.append("	member ");
 			buff.append("WHERE ");
 			buff.append("	m_id = ? ");
+			break;
+		case EDIT_MEMB_INFO:
+			buff.append("UPDATE ");
+			buff.append("	member ");
+			buff.append("SET ");
+			buff.append("	### ");
+			buff.append("WHERE ");
+			buff.append("	m_no = ? ");
 			break;
 		}
 		

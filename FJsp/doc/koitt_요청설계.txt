@@ -36,6 +36,13 @@
 	컨트롤러	:	com.koitt.www.controller.member.MemberInfo
 	뷰			:	무
 	
+4. 회원정보수정 처리 요청
+	요청내용	:	/member/infoEdit.ck
+	파라미터	:	mail, tel, code
+	데이터타입	: 	json
+	컨트롤러	:	com.koitt.www.controller.member.InfoEdit
+	뷰			:	무
+	
 
 
 
