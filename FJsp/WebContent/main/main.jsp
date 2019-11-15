@@ -121,6 +121,23 @@
 		$('#btn3').click(function(){
 			$('#edit').css('display', 'none');
 		});
+		
+		/*
+		$('.w3-button').click(function(){
+			var bid = $(this).attr('id');
+			if(bid == 'close' || bid == 'cancel' || bid == 'btn2' || bid == 'btn3'){
+				$(this).css('display', 'none');
+			} else {
+				return;
+			}
+		});
+		*/
+		
+		$('#boardList').click(function(){
+			$(location).attr('href', '/board/boardList.cls');
+		});
+		
+		
 /* 		
 		$('#memberEdit').click(function(){
 			$('#edit').css('display', 'block');
@@ -143,6 +160,7 @@
 				<div class="w3-col m2 w3-deep-purple w3-button" id="memberInfo">회원정보보기</div>
 				<!-- <div class="w3-col m2 w3-indigo w3-button" id="memberEdit">회원정보수정</div> -->
 			</c:if>
+			<div class="w3-col m2 w3-aqua w3-button" id="boardList">파일업로드게시판</div>
 		</div>
 	</div>
 	
