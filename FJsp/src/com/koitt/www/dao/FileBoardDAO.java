@@ -72,30 +72,68 @@ public class FileBoardDAO {
 		return list;
 	}
 	
+	// 게시글 등록 전담 처리 함수
+	public void addFBoard(FileBoardVO fbVO) {
+		// 커넥션 얻어오고
+		con = db.getCon();
+		// 질의명령 가져오고
+		String sql = fbSQL.getSql(fbSQL.ADD_CONTENT);
+		// pstmt가져오고
+		pstmt = db.getPSTMT(con, sql);
+		
+		
+		try {
+			// 질의명령 완성하고
+			pstmt.setString(1, fbVO.getId());
+			pstmt.setString(2, fbVO.getTitle());
+			pstmt.setString(3, fbVO.getBody());
+			
+			// 질의명령보내고 결과 받고
+			int cnt = pstmt.executeUpdate();
+			
+			if(cnt == 1) {
+				db.close(pstmt);
+				// fbVO의 cnt 1로 바꾸고
+				fbVO.setCnt(cnt);
+				String sql2 = fbSQL.getSql(fbSQL.SEL_FBNO);
+				pstmt = db.getPSTMT(con, sql2);
+				
+				pstmt.setString(1, fbVO.getId());
+				pstmt.setString(2, fbVO.getId());
+				
+				rs = pstmt.executeQuery();
+				rs.next();
+				fbVO.setBno(rs.getInt("bno"));
+				System.out.println("$$$ dao : " + fbVO.getBno());
+				db.close(rs);
+			} else {
+				// cnt가 1이 아닌 경우는 실패한 경우이고 fVO의 cnt는 0으로 초기화 되어 있으므로 그냥 넘겨주자. 
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+	}
+/*
+	==============================================================================
+	여기부터 파일 정보 테이블 데이터 베이스 작업
+ */
 	// 파일 정보 입력 전단 처리 함수
 	public int addFileInfo(FileInfoVO fvo) {
 		int cnt = 0;
 		con = db.getCon();
 		String sql = fbSQL.getSql(fbSQL.ADD_FILEINFO);
-		String sql2 = fbSQL.getSql(fbSQL.SEL_FNO);
 		pstmt = db.getPSTMT(con, sql);
 		try {
-			pstmt.setString(1, fvo.getOriname());
-			pstmt.setString(2, fvo.getSavename());
-			pstmt.setString(3, fvo.getDir());
-			pstmt.setLong(4, fvo.getLen());
+			pstmt.setInt(1, fvo.getBno());
+			pstmt.setString(2, fvo.getOriname());
+			pstmt.setString(3, fvo.getSavename());
+			pstmt.setString(4, fvo.getDir());
+			pstmt.setLong(5, fvo.getLen());
 			
 			cnt = pstmt.executeUpdate();
-			
-			if(cnt == 1) {
-				db.close(pstmt);
-				pstmt = db.getPSTMT(con, sql2);
-				pstmt.setString(1, fvo.getSavename());
-				rs = pstmt.executeQuery();
-				rs.next();
-				fvo.setFno(rs.getInt("fno"));
-				db.close(rs);
-			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		} finally {

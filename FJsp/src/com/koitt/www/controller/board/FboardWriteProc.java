@@ -100,7 +100,11 @@ public class FboardWriteProc implements MainController {
 		
 		// 1. 스트림방식으로 넘어온 데이터를 파라미터 방식으로 변환시킨다.
 		
+//	### 경로 수정됨... 
 		String sPath = req.getSession().getServletContext().getRealPath("upload");
+		
+
+
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(req, sPath, 1024 * 1024 * 10, "UTF-8", 
@@ -113,6 +117,12 @@ public class FboardWriteProc implements MainController {
 			e.printStackTrace();
 		}
 		
+		// 프로젝트 작업 경로 알아내
+		String path = this.getClass().getResource("/").getPath();
+		// git에 파일을 업로드하고 있는 관계로 작업파일들이 모두 git 폴더에 들어있어서 그 경로로 설정...
+		path = path.substring(0, path.indexOf("/source")) + "/git/simple/FJsp/WebContent/upload/";
+//		System.out.println(path);
+		
 		// 일반 컨트롤러보다 한가지 작업을 추가해야 하는데
 		// byte[] 을 파라미터로 바꾸는 작업
 		
@@ -124,9 +134,29 @@ public class FboardWriteProc implements MainController {
 				파일업로드 기능의 경우는 multi 에 저장되어 있다
 				따라서 파라미터는 multi 에서 꺼내야 한다.
 		 */
+		
+		// A. 먼저 게시판테이블에 데이터를 입력한다.
+		// 		게시판 테이블에 데이터가 입력되면 게시글 번호가 만들어지고 그 번호를 다시 가져와서 
+		//		파일정보테이블에 입력한다.
 		String sid = multi.getParameter("id");
 		String title = multi.getParameter("title");
 		String body = multi.getParameter("body");
+		
+		FileBoardVO fbVO = new FileBoardVO();
+		fbVO.setId(sid);
+		fbVO.setTitle(title);
+		fbVO.setBody(body);
+		
+		// 게시판테이블에 글 등록하고
+		FileBoardDAO fDAO = new FileBoardDAO();
+		fDAO.addFBoard(fbVO);
+		
+		if(fbVO.getCnt() != 1) {
+			// insert fail
+			view = "/board/boardWrite.cls";
+			return view;
+		}
+		
 		
 		// 데이터베이스 입력작업의 경우
 		// 먼저 파일 정보테이블에 데이터가 입력된 이후 
@@ -156,19 +186,52 @@ public class FboardWriteProc implements MainController {
 		File file = multi.getFile("file");
 		long len = file.length();
 		String savePath = "/upload";
+		System.out.println("***** sname : " + savename);
+		
+		// 실제 작업 경로에 파일 업로드 기능...
+		FileInputStream fin = null;
+		BufferedInputStream bin = null;
+		FileOutputStream fout = null;
+		BufferedOutputStream bout = null;
+		try {
+			fin = new FileInputStream(file);
+			bin = new BufferedInputStream(fin);
+			fout = new FileOutputStream(path + savename);
+			bout = new BufferedOutputStream(fout);
+			byte[] buff = new byte[1024];
+			while(true) {
+				int len1 = bin.read(buff);
+				if(len1 != -1) {
+					break;
+				}
+				bout.write(buff, 0, len1);
+				bout.flush();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				fin.close();
+				bin.close();
+				bout.close();
+				fout.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 		
 		FileInfoVO vo = new FileInfoVO();
+		// 글번호 vo에 담고
+		vo.setBno(fbVO.getBno());
 		vo.setOriname(oriname);
 		vo.setSavename(savename);
 		vo.setDir(savePath);
 		vo.setLen(len);
 		
-		FileBoardDAO fDAO = new FileBoardDAO();
 		int cnt = fDAO.addFileInfo(vo);
-		if(cnt == 1) {
-			// vo 에 파일 번호가 완성이 됬으므로 게시판테이블에 업로드한다.
-		
-		} else {
+		if(cnt != 1) {
+			// insert fail
 			view = "/board/boardWrite.cls";
 		}
 		

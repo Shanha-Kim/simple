@@ -108,6 +108,7 @@
 			});
 		});
 		
+		/*
 		$('#close').click(function(){
 			$('#detail').css('display', 'none');
 		});
@@ -121,17 +122,20 @@
 		$('#btn3').click(function(){
 			$('#edit').css('display', 'none');
 		});
+		*/
 		
-		/*
 		$('.w3-button').click(function(){
 			var bid = $(this).attr('id');
 			if(bid == 'close' || bid == 'cancel' || bid == 'btn2' || bid == 'btn3'){
-				$(this).css('display', 'none');
+				if(bid == 'btn2' || bid == 'btn3'){
+					$(this).parent().parent().parent().css('display', 'none');
+				} else {
+					$(this).parent().parent().parent().parent().css('display', 'none');
+				}
 			} else {
 				return;
 			}
 		});
-		*/
 		
 		$('#boardList').click(function(){
 			$(location).attr('href', '/board/boardList.cls');

@@ -27,6 +27,13 @@ public class FileBoardVO {
 	private Time wtime;
 	private String stime;
 	private String isshow;
+	private int cnt;
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getBno() {
 		return bno;
 	}

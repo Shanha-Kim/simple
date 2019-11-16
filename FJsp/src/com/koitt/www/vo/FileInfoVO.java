@@ -5,6 +5,9 @@ import java.text.*;
 
 public class FileInfoVO {
 	private int fno;
+	private int bno;
+	private int mno;
+	private String id;
 	private String oriname;
 	private String savename;
 	private String dir;
@@ -13,11 +16,36 @@ public class FileInfoVO {
 	private String sdate;
 	private Time ftime;
 	private String stime;
+	private int cnt;
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getFno() {
 		return fno;
 	}
 	public void setFno(int fno) {
 		this.fno = fno;
+	}
+	public int getBno() {
+		return bno;
+	}
+	public void setBno(int bno) {
+		this.bno = bno;
+	}
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public String getOriname() {
 		return oriname;
