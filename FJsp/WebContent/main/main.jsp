@@ -170,11 +170,11 @@
 	
 	
 	<!-- 회원 상세정보 보기 -->
-	<div class="w3-modal" id="detail">
-		<div class="w3-modal-content">
-			<div class="w3-container w3-col w3-white w3-padding">
-       			<span id="btn2" 
-       				class="w3-button w3-display-topright w3-margin-right w3-margin-top">&times;</span>
+	<div class="w3-modal m3" id="detail">
+		<div class="w3-modal-content w3-center w3-padding">
+			<div class="w3-container w3-white w3-padding">
+       			<div id="btn2" 
+       				class="w3-button w3-display-topright w3-margin-right w3-margin-top w3-purple">&times;</div>
 				<h2 class="w3-col w3-purple w3-padding w3-card">회원 정보</h2>
 				<div class="w3-col w3-border-bottom">
 					<h5 class="w3-col m3 w3-right-align">회원번호 : </h5>

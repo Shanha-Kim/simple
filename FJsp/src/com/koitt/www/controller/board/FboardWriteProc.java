@@ -8,6 +8,7 @@ import com.oreilly.servlet.multipart.*;
 import com.koitt.www.controller.*;
 import com.koitt.www.dao.*;
 import com.koitt.www.vo.*;
+import com.koitt.www.util.*;
 
 public class FboardWriteProc implements MainController {
 
@@ -103,12 +104,11 @@ public class FboardWriteProc implements MainController {
 //	### 경로 수정됨... 
 		String sPath = req.getSession().getServletContext().getRealPath("upload");
 		
-
-
 		MultipartRequest multi = null;
 		try {
 			multi = new MultipartRequest(req, sPath, 1024 * 1024 * 10, "UTF-8", 
-													new DefaultFileRenamePolicy());
+													new MyFileRenamePolicy());
+//													new DefaultFileRenamePolicy());
 			// 위 작업이 에러없이 완료가 되면
 			// byte[] 이 파라미터로 변경되고
 			// 업로드가 완료된다.
@@ -117,7 +117,7 @@ public class FboardWriteProc implements MainController {
 			e.printStackTrace();
 		}
 		
-		// 프로젝트 작업 경로 알아내
+		// 프로젝트 작업 경로 알아내기
 		String path = this.getClass().getResource("/").getPath();
 		// git에 파일을 업로드하고 있는 관계로 작업파일들이 모두 git 폴더에 들어있어서 그 경로로 설정...
 		path = path.substring(0, path.indexOf("/source")) + "/git/simple/FJsp/WebContent/upload/";
@@ -180,13 +180,14 @@ public class FboardWriteProc implements MainController {
 				
 		 */
 		
+		// B. 파일정보 데이터 파일정보테이블에 추가하기
 		// multi 에 저장되어 있는 파일 정보들을 꺼내온다.
 		String oriname = multi.getOriginalFileName("file");
 		String savename = multi.getFilesystemName("file");
 		File file = multi.getFile("file");
 		long len = file.length();
 		String savePath = "/upload";
-		System.out.println("***** sname : " + savename);
+//		System.out.println("***** sname : " + savename);
 		
 		// 실제 작업 경로에 파일 업로드 기능...
 		FileInputStream fin = null;
@@ -201,7 +202,7 @@ public class FboardWriteProc implements MainController {
 			byte[] buff = new byte[1024];
 			while(true) {
 				int len1 = bin.read(buff);
-				if(len1 != -1) {
+				if(len1 == -1) {
 					break;
 				}
 				bout.write(buff, 0, len1);

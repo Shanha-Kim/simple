@@ -27,7 +27,7 @@ public class MemberInfo extends HttpServlet {
 		pw.println("\"mname\": \"" + vo.getName() + "\",");
 		pw.println("\"mmail\": \"" + vo.getMail() + "\",");
 		pw.println("\"mtel\": \"" + vo.getTel() + "\",");
-		pw.println("\"mdate\": \"" + vo.getsDate() + "  " + vo.getsTime() + "\"");
+		pw.println("\"mdate\": \"" + vo.getsDate() + "  &nbsp;&nbsp;&nbsp;<small>" + vo.getsTime() + "</small>\"");
 		pw.print("}");
 		
 	}
