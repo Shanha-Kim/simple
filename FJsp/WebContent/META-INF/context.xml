@@ -20,6 +20,18 @@ xml 문서는 내부에 반드시 로트 태그가 하나가 존재해야 한다
 		driverClassName="oracle.jdbc.driver.OracleDriver"
 		url="jdbc:oracle:thin:@localhost:1521:orcl"
 	/>
+	<Resource
+		name="TestDB"
+		auto="Container"
+		type="javax.sql.DataSource"
+		maxTotal="8"
+		maxIdle="2"
+		maxWaitMillis="10000"
+		username="koitt"
+		password="koitt"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		url="jdbc:oracle:thin:@localhost:1521:orcl"
+	/>
 	<!-- 
 		이 설정은 이 프로젝트에서 사용할 데이터베이스의 커넥션을 여러개 확보해놓고
 		데이터베이스 작업이 필요하면 그때 하나씩 꺼내서 사용할 목적으로 만들어진

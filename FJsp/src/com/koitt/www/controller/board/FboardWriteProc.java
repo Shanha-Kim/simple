@@ -192,14 +192,17 @@ public class FboardWriteProc implements MainController {
 		// 실제 작업 경로에 파일 업로드 기능...
 		FileInputStream fin = null;
 		BufferedInputStream bin = null;
-		FileOutputStream fout = null;
-		BufferedOutputStream bout = null;
+//		FileOutputStream fout = null;
+//		BufferedOutputStream bout = null;
+		PrintStream ps = null;
 		try {
 			fin = new FileInputStream(file);
 			bin = new BufferedInputStream(fin);
-			fout = new FileOutputStream(path + savename);
-			bout = new BufferedOutputStream(fout);
+//			fout = new FileOutputStream(path + savename);
+//			bout = new BufferedOutputStream(fout);
+			ps = new PrintStream(path + savename);
 			byte[] buff = new byte[1024];
+			/*
 			while(true) {
 				int len1 = bin.read(buff);
 				if(len1 == -1) {
@@ -208,14 +211,23 @@ public class FboardWriteProc implements MainController {
 				bout.write(buff, 0, len1);
 				bout.flush();
 			}
-		} catch (Exception e) {
+			*/
+			while(true) {
+				int len1 = bin.read(buff);
+				if(len1 == -1) {
+					break;
+				}
+				ps.write(buff, 0, len1);
+			}
+		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				fin.close();
 				bin.close();
-				bout.close();
-				fout.close();
+//				bout.close();
+//				fout.close();
+				ps.close();
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -239,11 +251,3 @@ public class FboardWriteProc implements MainController {
 		return view;
 	}
 }
-
-
-
-
-
-
-
-

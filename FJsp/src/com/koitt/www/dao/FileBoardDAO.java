@@ -104,7 +104,7 @@ public class FileBoardDAO {
 				rs = pstmt.executeQuery();
 				rs.next();
 				fbVO.setBno(rs.getInt("bno"));
-				System.out.println("$$$ dao : " + fbVO.getBno());
+//				System.out.println("$$$ dao : " + fbVO.getBno());
 				db.close(rs);
 			} else {
 				// cnt가 1이 아닌 경우는 실패한 경우이고 fVO의 cnt는 0으로 초기화 되어 있으므로 그냥 넘겨주자. 
