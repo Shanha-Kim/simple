@@ -47,6 +47,15 @@
 			위의 버튼이벤트를 하나로 처리를 하세요.
 		*/
 		
+		if('${PAGE.startPage}' == 1){
+			$('#startbtn').removeClass('pbutton');
+			$('#startbtn').addClass('w3-light-grey');
+		}
+		if('${PAGE.endPage}' == '${PAGE.totalPage}'){
+			$('#endbtn').removeClass('pbutton');
+			$('#endbtn').addClass('w3-light-grey');
+		}
+		
 		$('.w3-button').click(function(){
 			var tid = $(this).attr('id');
 			var target = '';
@@ -62,10 +71,37 @@
 			$(location).attr('href', target);
 		});
 		
+		$('.pbutton').click(function(){
+			var sPage = $(this).html();
+			var ltxt = $('#startbtn').html();
+			var rtxt = $('#endbtn').html();
+			if(sPage == ltxt){
+				alert('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+				if('${PAGE.startPage}' == 1){
+					return;
+				}
+				sPage = '${PAGE.startPage - 1}';
+				$('#nowPage').val(sPage);
+			} else if(sPage == rtxt){
+				alert('>>>>>>>>>>>>>>>>>>>>');
+				if('${PAGE.endPage}' == '${PAGE.totalPage}'){
+					return;
+				}
+				sPage = '${PAGE.endPage + 1}';
+				$('#nowPage').val(sPage);
+			} else {
+				alert('nnnnnnnnnnnnnnn');
+				$('#nowPage').val(sPage);
+			}
+			$('#frm').submit();
+		});
 	});
 </script>
 </head>
 <body>
+	<form method="post" action="/board/reboard.cls" id="frm">
+		<input type="hidden" name="nowPage" id="nowPage">
+	</form>
 	<div class="w3-col m3"><p></p></div>
 	<div class="w3-col m6">
 		<h2 class="w3-container w3-margin-top w3-purple w3-card w3-center w3-padding">댓글 게시판</h2>
@@ -116,12 +152,12 @@
 		
 		<!-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_pagination_border -->
 		<div class="w3-center">
-			<div class="w3-bar w3-border">
-			  <a href="#" class="w3-bar-item w3-button w3-hover-blue">&laquo;</a>
-			  <a href="#" class="w3-bar-item w3-button w3-hover-blue">1</a>
-			  <a href="#" class="w3-bar-item w3-button w3-hover-blue">2</a>
-			  <a href="#" class="w3-bar-item w3-button w3-hover-blue">3</a>
-			  <a href="#" class="w3-bar-item w3-button w3-hover-blue">&raquo;</a>
+			<div class="w3-bar w3-border w3-margin-top w3-margin-bottom">
+			  <div class="w3-bar-item w3-button w3-hover-blue pbutton" id="startbtn">&laquo;</div>
+			  <c:forEach var="page" begin="${PAGE.startPage}" end="${PAGE.endPage}">
+			  <div class="w3-bar-item w3-button w3-hover-blue pbutton">${page}</div>
+			  </c:forEach>
+			  <div class="w3-bar-item w3-button w3-hover-blue pbutton" id="endbtn">&raquo;</div>
 			</div>
 		</div>
 		

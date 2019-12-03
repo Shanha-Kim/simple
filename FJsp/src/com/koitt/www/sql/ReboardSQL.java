@@ -14,45 +14,59 @@ package com.koitt.www.sql;
  */
 public class ReboardSQL {
 	public final int SEL_ALL = 1001;
+	public final int SEL_CNT = 1002;
 	
 	// 코드를 입력해서 호출하면 질의명령을 반환해주는 함수
 	public String getSQL(int code) {
 		StringBuffer buff = new StringBuffer();
 		
 		switch(code) {
+		case SEL_CNT:
+			buff.append("SELECT ");
+			buff.append("	count(*) cnt ");
+			buff.append("FROM ");
+			buff.append("	reboard ");
+			buff.append("WHERE ");
+			buff.append("	rb_isshow = 'Y' ");
+			break;
 		case SEL_ALL:
 			buff.append("SELECT ");
-			buff.append("	m_id, avt, rb_no, rb_body, ");
-			buff.append("	rb_date, rb_upno, (level - 1) lvl ");
+			buff.append("	* ");
 			buff.append("FROM ");
-			buff.append("	( ");
-			buff.append("		SELECT ");
-			buff.append("			m_id, avt, rb_no, rb_body, rb_date, rb_upno ");
-			buff.append("		FROM ");
-			buff.append("			reboard, ");
-			buff.append("			(SELECT ");
-			buff.append("				m_no, m_id, ");
-			buff.append("				( ");
-			buff.append("					SELECT ");
-			buff.append("						a_img ");
-			buff.append("					FROM ");
-			buff.append("						avatar ");
-			buff.append("					WHERE ");
-			buff.append("						a_no = m_avt ");
-			buff.append("				) avt ");
+			buff.append("	(SELECT ");
+			buff.append("		ROWNUM rno, m_id, avt, rb_no, rb_body, ");
+			buff.append("		rb_date, rb_upno, (level - 1) lvl ");
+			buff.append("	FROM ");
+			buff.append("		( ");
+			buff.append("			SELECT ");
+			buff.append("				m_id, avt, rb_no, rb_body, rb_date, rb_upno ");
 			buff.append("			FROM ");
-			buff.append("				member ");
-			buff.append("			) ");
-			buff.append("		WHERE ");
-			buff.append("			RB_ISSHOW = 'Y' ");
-			buff.append("			AND m_no = rb_mno ");
-			buff.append("	) ");
-			buff.append("START WITH ");
-			buff.append("	RB_UPNO IS NULL ");
-			buff.append("CONNECT BY ");
-			buff.append("	PRIOR RB_NO = RB_UPNO ");
-			buff.append("ORDER SIBLINGS BY ");
-			buff.append("	RB_DATE DESC");
+			buff.append("				reboard, ");
+			buff.append("				(SELECT ");
+			buff.append("					m_no, m_id, ");
+			buff.append("					( ");
+			buff.append("						SELECT ");
+			buff.append("							a_img ");
+			buff.append("						FROM ");
+			buff.append("							avatar ");
+			buff.append("						WHERE ");
+			buff.append("							a_no = m_avt ");
+			buff.append("					) avt ");
+			buff.append("				FROM ");
+			buff.append("					member ");
+			buff.append("				) ");
+			buff.append("			WHERE ");
+			buff.append("				RB_ISSHOW = 'Y' ");
+			buff.append("				AND m_no = rb_mno ");
+			buff.append("		) ");
+			buff.append("	START WITH ");
+			buff.append("		RB_UPNO IS NULL ");
+			buff.append("	CONNECT BY ");
+			buff.append("		PRIOR RB_NO = RB_UPNO ");
+			buff.append("	ORDER SIBLINGS BY ");
+			buff.append("		RB_DATE DESC)");
+			buff.append("WHERE ");
+			buff.append("	rno BETWEEN ? AND ? ");
 			break;
 		}
 		

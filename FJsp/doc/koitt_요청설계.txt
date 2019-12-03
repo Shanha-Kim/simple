@@ -75,7 +75,7 @@
 
 1. 폼 요청
 	요청내용	:	/board/reboard.cls
-	파라미터	:	[SID]
+	파라미터	:	nowPage
 	컨트롤러	:	com.koitt.www.controller.board.Reboard
 	뷰			:	/com/koitt/www/board/reboard.jsp
 	

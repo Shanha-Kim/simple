@@ -14,6 +14,7 @@ package com.koitt.www.dao;
 
 import DB.*;
 import com.koitt.www.vo.*;
+import com.koitt.www.util.*;
 
 import java.sql.*;
 import java.util.*;
@@ -33,7 +34,7 @@ public class ReboardDAO {
 	}
 	
 	// 댓글테이블의 모든 데이터를 가져오는 함수
-	public ArrayList<ReboardVO> reboardAllList(){
+	public ArrayList<ReboardVO> reboardAllList(int startCont, int endCont){
 		ArrayList<ReboardVO> list = new ArrayList<ReboardVO>();
 		// 할일
 		// 1. 커넥션 얻어오고
@@ -41,10 +42,13 @@ public class ReboardDAO {
 		// 2. 질의명령 가져오고
 		String sql = toSQL.getSQL(toSQL.SEL_ALL);
 		// 3. Statement 가져오고
-		stmt = db.getSTMT(con);
+		pstmt = db.getPSTMT(con, sql);
 		try{
+			// 질의명령 완성하고
+			pstmt.setInt(1, startCont);
+			pstmt.setInt(2, endCont);
 			// 4. 질의명령 보내고 결과받고
-			rs = stmt.executeQuery(sql);
+			rs = pstmt.executeQuery();
 			// 5. 데이터 뽑아서 VO에 담고
 			while(rs.next()) {
 				// 한번 반복될 때 마다 게시글 하나의 데이터를 뽑아오게 되므로
@@ -65,12 +69,38 @@ public class ReboardDAO {
 			e.printStackTrace();
 		} finally {
 			db.close(rs);
-			db.close(stmt);
+			db.close(pstmt);
 			db.close(con);
 		}
 		
 		// 7. 리스트 내보내고
 		return list;
+	}
+	
+	// 총 게시물 수 가져오는 전담 처리함수
+	public int getTotal() {
+		int cnt = 0;
+		// 할일
+		// 1. 커넥션 얻고
+		con = db.getCon();
+		// 2. 질의명령 가져오고
+		String sql = toSQL.getSQL(toSQL.SEL_CNT);
+		// 3. stmt 얻어오고
+		stmt = db.getSTMT(con);
+		// 4. 질의명령 보내고 결과 받고
+		try {
+			rs = stmt.executeQuery(sql);
+			rs.next();
+			cnt = rs.getInt("cnt");
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(stmt);
+			db.close(con);
+		}
+		// 5. 결과 내보내고
+		return cnt;
 	}
 	
 }

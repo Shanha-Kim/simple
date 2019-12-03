@@ -179,6 +179,10 @@ WHERE
 -- 회원테이블의 회원 아이디와 
 -- 회원의 아바타 파일이름을 조회하세요.
 SELECT
+    *
+FROM
+(
+SELECT
     ROWNUM RNO, m_id, avt, rb_no, rb_body, 
     rb_date, rb_upno, (level - 1) lvl
 FROM
@@ -210,6 +214,9 @@ CONNECT BY
     PRIOR RB_NO = RB_UPNO
 ORDER SIBLINGS BY
     RB_DATE DESC
+)
+WHERE
+    RNO BETWEEN 2 AND 3
 ;
 
 COMMIT;
