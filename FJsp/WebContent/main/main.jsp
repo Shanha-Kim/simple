@@ -141,6 +141,10 @@
 			$(location).attr('href', '/board/boardList.cls');
 		});
 		
+		$('#reboard').click(function(){
+			$(location).attr('href', '/board/reboard.cls');
+		});
+		
 		
 /* 		
 		$('#memberEdit').click(function(){
@@ -165,6 +169,7 @@
 				<!-- <div class="w3-col m2 w3-indigo w3-button" id="memberEdit">회원정보수정</div> -->
 			</c:if>
 			<div class="w3-col m2 w3-aqua w3-button" id="boardList">파일업로드게시판</div>
+			<div class="w3-col m2 w3-blue-grey w3-button" id="reboard">댓글게시판</div>
 		</div>
 	</div>
 	

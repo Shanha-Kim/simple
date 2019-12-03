@@ -97,7 +97,7 @@ public class FileBoardSQL {
 		case ADD_FILEINFO:
 			buff.append("INSERT INTO ");
 			buff.append("	fileinfo( ");
-			buff.append("	f_no, f_fbno, f_oname, f_sname, f_dir, f_len ");
+			buff.append("	f_no, f_bno, f_oname, f_sname, f_dir, f_len ");
 			buff.append("	) ");
 			buff.append("VALUES( ");
 			buff.append("	( ");

@@ -119,7 +119,9 @@ public class FboardWriteProc implements MainController {
 		
 		// 프로젝트 작업 경로 알아내기
 		String path = this.getClass().getResource("/").getPath();
+		System.out.println("### cont path : " + path);
 		// git에 파일을 업로드하고 있는 관계로 작업파일들이 모두 git 폴더에 들어있어서 그 경로로 설정...
+//		path = path.substring(0, path.indexOf("/source")) + "/source/FJsp/WebContent/upload/";
 		path = path.substring(0, path.indexOf("/source")) + "/git/simple/FJsp/WebContent/upload/";
 //		System.out.println(path);
 		
@@ -184,6 +186,7 @@ public class FboardWriteProc implements MainController {
 		// multi 에 저장되어 있는 파일 정보들을 꺼내온다.
 		String oriname = multi.getOriginalFileName("file");
 		String savename = multi.getFilesystemName("file");
+		System.out.println("cont savename : " + savename);
 		File file = multi.getFile("file");
 		long len = file.length();
 		String savePath = "/upload";
