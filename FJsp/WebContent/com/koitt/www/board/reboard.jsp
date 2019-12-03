@@ -26,6 +26,10 @@
 		margin-top: 5px;
 		margin-right: 0px;
 	}
+	
+	.mt10 {
+		margin-top: 10px;
+	}
 </style>
 <script type="text/javascript">
 	$(function(){
@@ -79,17 +83,17 @@
 		<div class="w3-col w3-content w3-margin-top">
 			
 			<c:forEach var="data" items="${LIST}">
-			<div style="padding-left: ${data.lvl} * 25 px;">
+			<div style="padding-left: ${data.lvl * 70}px;" class="mt10">
 				<div class="w3-container w3-card">
 					<div class="w3-col w90 w3-center">
 						<div class="w3-content w3-circle">
-							<img src="/img/avatar/img_avatar1.png" class="w80 w3-circle">
+							<img src="/img/avatar/${data.avatar}" class="w80 w3-circle">
 						</div>
 						<h6>${data.id}</h6>
 					</div>
 					<div class="w3-rest lpad25">
-						<h6 class="w3-col m3">${data.wdate}</h6>
-						<div class="w3-col m9 w3-padding">
+						<h6 class="w3-col m5"><span>${data.wDate} <small>${data.wTime}</small></span></h6>
+						<div class="w3-col m7 w3-padding">
 						<c:if test="${data.id eq SID}">
 						<div class="w3-button w3-tiny w3-red w3-right">삭제</div>
 						<div class="w3-button w3-tiny w3-green w3-right">수정</div>
