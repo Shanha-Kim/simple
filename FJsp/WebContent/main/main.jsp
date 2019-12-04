@@ -13,6 +13,9 @@
 		$('#login').click(function(){
 			$(location).attr('href', '/member/login.cls');
 		});
+		$('#join').click(function(){
+			$(location).attr('href', '/member/join.cls');
+		});
 		$('#logout').click(function(){
 			$(location).attr('href', '/member/logout.cls');
 		});

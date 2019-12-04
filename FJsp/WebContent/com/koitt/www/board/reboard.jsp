@@ -48,12 +48,12 @@
 		*/
 		
 		if('${PAGE.startPage}' == 1){
-			$('#startbtn').removeClass('pbutton');
-			$('#startbtn').addClass('w3-light-grey');
+			$('#startbtn').toggleClass('pbutton');
+			$('#startbtn').toggleClass('w3-light-grey');
 		}
 		if('${PAGE.endPage}' == '${PAGE.totalPage}'){
-			$('#endbtn').removeClass('pbutton');
-			$('#endbtn').addClass('w3-light-grey');
+			$('#endbtn').toggleClass('pbutton');
+			$('#endbtn').toggleClass('w3-light-grey');
 		}
 		
 		$('.w3-button').click(function(){
@@ -75,22 +75,15 @@
 			var sPage = $(this).html();
 			var ltxt = $('#startbtn').html();
 			var rtxt = $('#endbtn').html();
+			if(sPage == '${PGE.nowPage}') return;
+			
 			if(sPage == ltxt){
-				alert('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
-				if('${PAGE.startPage}' == 1){
-					return;
-				}
 				sPage = '${PAGE.startPage - 1}';
 				$('#nowPage').val(sPage);
 			} else if(sPage == rtxt){
-				alert('>>>>>>>>>>>>>>>>>>>>');
-				if('${PAGE.endPage}' == '${PAGE.totalPage}'){
-					return;
-				}
 				sPage = '${PAGE.endPage + 1}';
 				$('#nowPage').val(sPage);
 			} else {
-				alert('nnnnnnnnnnnnnnn');
 				$('#nowPage').val(sPage);
 			}
 			$('#frm').submit();
@@ -153,11 +146,11 @@
 		<!-- https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_pagination_border -->
 		<div class="w3-center">
 			<div class="w3-bar w3-border w3-margin-top w3-margin-bottom">
-			  <div class="w3-bar-item w3-button w3-hover-blue pbutton" id="startbtn">&laquo;</div>
+			  <div class="w3-bar-item w3-hover-blue pbutton" id="startbtn">&laquo;</div>
 			  <c:forEach var="page" begin="${PAGE.startPage}" end="${PAGE.endPage}">
-			  <div class="w3-bar-item w3-button w3-hover-blue pbutton">${page}</div>
+			  <div class="w3-bar-item w3-hover-blue pbutton">${page}</div>
 			  </c:forEach>
-			  <div class="w3-bar-item w3-button w3-hover-blue pbutton" id="endbtn">&raquo;</div>
+			  <div class="w3-bar-item w3-hover-blue pbutton" id="endbtn">&raquo;</div>
 			</div>
 		</div>
 		

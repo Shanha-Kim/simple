@@ -184,7 +184,9 @@ public class FboardWriteProc implements MainController {
 		
 		// B. 파일정보 데이터 파일정보테이블에 추가하기
 		// multi 에 저장되어 있는 파일 정보들을 꺼내온다.
+		
 		String oriname = multi.getOriginalFileName("file");
+		if(oriname != null ) {
 		String savename = multi.getFilesystemName("file");
 		System.out.println("cont savename : " + savename);
 		File file = multi.getFile("file");
@@ -250,7 +252,7 @@ public class FboardWriteProc implements MainController {
 			// insert fail
 			view = "/board/boardWrite.cls";
 		}
-		
+		}
 		return view;
 	}
 }

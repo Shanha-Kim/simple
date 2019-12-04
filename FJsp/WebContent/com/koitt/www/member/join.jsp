@@ -83,6 +83,11 @@
 		background: none;
 		color:white;
 	}
+	
+	.avt1 {
+		width: 100%;
+		padding: 5px;
+	}
 </style>
 
 <script type="text/javascript">
@@ -129,7 +134,7 @@
 		<div class="joinLogo">J O I N</div>
 		<div class="listbox">
 	<form method="POST" action="/member/joinExec.nop">
-		<ul class="ulcl">
+		<ul class="ulcl w3-margin-bottom w3-padding">
 			<li id="idli"><label for="id">I D</label>
 			<input type="text" id="id" name="id" required class="w3-rest">
 			<input type="button" id="btn" value="idCheck" class="w3-col m2 w3-button">
@@ -151,9 +156,47 @@
 			<li><label for="num">Phone Number</label><input type="text" id="tel" name="tel" placeholder="예] 010-1111-1111" required >
 			<p class="pcl" id="num_check"></p>
 			</li>
+			
+			<li class="w3-margin-bottom">
+				<label for="gen">성 별</label>
+				<div class="w3-row w3-margin-bottom">
+					<div class="w3-col m3"><p></p></div>
+					<div class="w3-col m4">
+						<span><input class="w3-col m2 w3-radio gen" type="radio" name="gen" value="M" > 남 자</span>
+					</div>
+					<div class="w3-col m4 ">
+						<span><input class="w3-col m2 w3-radio gen" type="radio" name="gen" value="F" > 여 자</span>
+					</div>
+				</div>
+					<hr class="w3-light-grey">
+			</li>
+			<li>
+				<label for="avt">아바타</label>
+				<div class="w3-col ">
+					<div class="w3-col m4">
+						<input type="radio" name="avt" id="avt" value="11">
+						<div>
+							<img src="/img/avatar/img_avatar1.png" class="avt1">
+						</div>
+					</div>
+					<div class="w3-col m4">
+						<input type="radio" name="avt" id="avt" value="12">
+						<div>
+							<img src="/img/avatar/img_avatar2.png" class="avt1">
+						</div>
+					</div>
+					<div class="w3-col m4">
+						<input type="radio" name="avt" id="avt" value="13">
+						<div>
+							<img src="/img/avatar/img_avatar3.png" class="avt1">
+						</div>
+					</div>
+				</div>
+			</li>
+			
 		</ul>
 		
-		<div class="inputcl">
+		<div class="inputcl w3-margin-bottom">
 			<input class="subcl" type="submit" id="join" value="Sign Up">
 			<button id="returnBtn">Back</button>
 		</div>
