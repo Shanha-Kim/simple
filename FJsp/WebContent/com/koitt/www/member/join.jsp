@@ -133,12 +133,17 @@
 			});
 		});
 		
+		$('.profIn').change(function(e){
+			var tmp = URL.createObjectURL(e.target.files[0]);
+			$('#profImg').attr('src', tmp);
+		});
+		/*
 		var evt = document.getElementById('prof');
 		evt.onchange = function(e){
 			var tmp = URL.createObjectURL(e.target.files[0]);
 			$('#profImg').attr('src', tmp);
 		}
-		
+		*/
 		// gen을 클릭했을 때 이벤트가 발생할 것이고.. 그때마다 적절한 행동을 하면 될것 같다.
 		$('.gen').click(function(){
 			var sgen = $(this).val();

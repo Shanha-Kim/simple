@@ -31,10 +31,9 @@ public class JoinProc implements MainController {
 		// 할일
 		// 1. 데이터 받고 <== 스트림 방식으로 넘어오는 데이터를 일단 서버의 파일로 저장하고
 		MultipartRequest multi = null;
-		String sPath = req.getSession().getServletContext().getRealPath("img");
-		System.out.println("*** cont path : " + sPath);
+		String sPath = req.getSession().getServletContext().getRealPath("img/profile");
 		try {
-			multi = new MultipartRequest(req, sPath + "/profile", 1024*1024*10, "UTF-8", new MyFileRenamePolicy());
+			multi = new MultipartRequest(req, sPath, 1024*1024*10, "UTF-8", new MyFileRenamePolicy());
 			
 			// 회원 정보를 입력하고...
 			cnt = insertMemb(multi);
