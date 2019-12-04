@@ -30,6 +30,9 @@ public class MemberVO {
 	private Time joinTime;
 	private String sDate;
 	private String sTime;
+	private String avatar;
+	private int avt;
+	private String gen;
 	
 	public int getMno() {
 		return mno;
@@ -98,5 +101,23 @@ public class MemberVO {
 	public void setsDate() {
 		SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd");
 		this.sDate = form.format(joinDate);
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	public int getAvt() {
+		return avt;
+	}
+	public void setAvt(int avt) {
+		this.avt = avt;
+	}
+	public String getGen() {
+		return gen;
+	}
+	public void setGen(String gen) {
+		this.gen = gen;
 	}
 }

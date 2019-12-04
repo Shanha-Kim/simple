@@ -43,6 +43,20 @@
 	컨트롤러	:	com.koitt.www.controller.member.InfoEdit
 	뷰			:	무
 	
+	
+5. 회원가입 폼보기 요청
+	요청내용	:	/member/join.cls
+	파라미터	:	무
+	컨트롤러	:	com.koitt.www.controller.member.Join
+	뷰			:	/com/koitt/www/member/join.jsp
+
+6. 회원가입 처리 요청
+	요청내용	:	/member/joinProc.cls
+	파라미터	:	무
+	컨트롤러	:	com.koitt.www.controller.member.JoinProc
+	뷰			:	
+					처리성공 : /
+					처리실패 : /member/join.cls
 
 ==============================================================================
 

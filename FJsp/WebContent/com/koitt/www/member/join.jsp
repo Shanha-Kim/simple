@@ -9,18 +9,14 @@
 <link rel="stylesheet" href="/css/w3.css" >
 <script type="text/javascript" src="/js/jquery-3.4.1.min.js" ></script>
 <style>
-	body{
+	body {
 		background-color: #6DC1F5;
-		font-family: calnin
+		font-family: calnin;
 	}
 
-	.container{
-		
-		position:absolute;
+	.container {
 		width:500px;
-		top:50%;
-		left:50%;
-		transform: translate(-50%,-50%);
+		margin: 0 auto;
 		color: white;
 	}
 	
@@ -37,7 +33,7 @@
 		list-style: none;	
 	} 
 	
-	.ulcl input{
+	.ulcl input {
 		width:100%;
 		height: 15px;
 		border: none;
@@ -46,7 +42,7 @@
 		border-bottom: 1px dotted white;
 	}
 	
-	.pcl{
+	.pcl {
 		position: absolute;
 		left: 150px;
 		font-size: 10px;
@@ -88,10 +84,23 @@
 		width: 100%;
 		padding: 5px;
 	}
+	.pic1 {
+		width: 120px;
+		height: auto;
+		padding: 5px;
+	}
+	
+	.h50 {
+		height: 150px;
+	}
 </style>
 
 <script type="text/javascript">
 	$(function(){
+		$('.avtM').css('display', 'none');
+		$('.avtF').css('display', 'none');
+		$('#avtChoice').css('display', 'none');
+		
 		$('#btn').click(function(){
 			var sid = $('#id').val();
 			
@@ -123,6 +132,25 @@
 				}
 			});
 		});
+		
+		var evt = document.getElementById('prof');
+		evt.onchange = function(e){
+			var tmp = URL.createObjectURL(e.target.files[0]);
+			$('#profImg').attr('src', tmp);
+		}
+		
+		// gen을 클릭했을 때 이벤트가 발생할 것이고.. 그때마다 적절한 행동을 하면 될것 같다.
+		$('.gen').click(function(){
+			var sgen = $(this).val();
+			$('#avtChoice').css('display', 'block');
+			if(sgen == 'M'){
+				$('.avtF').stop().slideUp(10);
+				$('.avtM').stop().slideDown(500);
+			} else {
+				$('.avtM').stop().slideUp(10);
+				$('.avtF').stop().slideDown(500);
+			}
+		});
 	});
 </script>
 
@@ -133,11 +161,12 @@
 	<div class="container">
 		<div class="joinLogo">J O I N</div>
 		<div class="listbox">
-	<form method="POST" action="/member/joinExec.nop">
+	<form method="POST" action="/member/joinProc.cls" enctype="multipart/form-data">
 		<ul class="ulcl w3-margin-bottom w3-padding">
-			<li id="idli"><label for="id">I D</label>
-			<input type="text" id="id" name="id" required class="w3-rest">
-			<input type="button" id="btn" value="idCheck" class="w3-col m2 w3-button">
+			<li id="idli">
+				<label for="id">I D</label>
+				<input type="text" id="id" name="id" required class="">
+				<input type="button" id="btn" value="idCheck" class="w3-button w3-right" style="width: 150px; height: 30px; padding: 0px;">
 			<p class="" id="id_check" ></p>
 			</li>
 			
@@ -170,30 +199,63 @@
 				</div>
 					<hr class="w3-light-grey">
 			</li>
-			<li>
+			<li id="avtChoice">
 				<label for="avt">아바타</label>
-				<div class="w3-col ">
+				<div class="w3-col avtM">
 					<div class="w3-col m4">
-						<input type="radio" name="avt" id="avt" value="11">
+						<input type="radio" name="avt" value="11">
 						<div>
 							<img src="/img/avatar/img_avatar1.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
-						<input type="radio" name="avt" id="avt" value="12">
+						<input type="radio" name="avt" value="12">
 						<div>
 							<img src="/img/avatar/img_avatar2.png" class="avt1">
 						</div>
 					</div>
 					<div class="w3-col m4">
-						<input type="radio" name="avt" id="avt" value="13">
+						<input type="radio" name="avt" value="13">
 						<div>
 							<img src="/img/avatar/img_avatar3.png" class="avt1">
 						</div>
 					</div>
 				</div>
+				<div class="w3-col avtF">
+					<div class="w3-col m4">
+						<input type="radio" name="avt" value="14">
+						<div>
+							<img src="/img/avatar/img_avatar4.png" class="avt1">
+						</div>
+					</div>
+					<div class="w3-col m4">
+						<input type="radio" name="avt" value="15">
+						<div>
+							<img src="/img/avatar/img_avatar5.png" class="avt1">
+						</div>
+					</div>
+					<div class="w3-col m4">
+						<input type="radio" name="avt" value="16">
+						<div>
+							<img src="/img/avatar/img_avatar6.png" class="avt1">
+						</div>
+					</div>
+				</div>
 			</li>
 			
+			<!-- 프로필사진 업로드기능 -->
+			<li>
+				<div class="w3-col">
+					<label for="prof">프로필사진</label>
+					<div class="w3-col w3-padding prof">
+						<input type="file" name="prof" id="prof" 
+								class="w3-file profIn" style="height: 50px;">
+					</div>
+					<div id="" class="w3-padding w3-center">
+						<img src="/img/profile/noimage.jpg" alt="noimage" class="pic1" id="profImg">
+					</div>
+				</div>
+			</li>
 		</ul>
 		
 		<div class="inputcl w3-margin-bottom">
