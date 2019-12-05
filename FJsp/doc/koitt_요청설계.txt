@@ -93,8 +93,34 @@
 	컨트롤러	:	com.koitt.www.controller.board.Reboard
 	뷰			:	/com/koitt/www/board/reboard.jsp
 	
+=============================================================================
+# 설문 조사 요청 설계
 
+1. 설문조사 뷰 보기
+	요청내용	: 	/survey/survey.cls
+	파라미터	: 	[id]
+	컨트롤러	:	com.koitt.www.controller.survey.Survey
+	뷰			:	/com/koitt/www/survey/survey.jsp
 
+2. 설문 참여 뷰 보기
+	요청내용	: 	/survey/surveyDetail.cls
+	파라미터	: 	[id]
+	컨트롤러	:	com.koitt.www.controller.survey.SurveyDetail
+	뷰			:	/com/koitt/www/survey/surveyDetail.jsp
+	
+3. 설문 처리 요청
+	요청내용	: 	/survey/surveyProc.cls
+	파라미터	: 	[id]
+	컨트롤러	:	com.koitt.www.controller.survey.SurveyProc
+	뷰			:	
+					성공 - /survey/surveyResult.cls - redirect
+					실패 - /survey/survey.cls 		- redirect
+
+4. 설문 결과 뷰 보기
+	요청내용	: 	/survey/surveyResult.cls
+	파라미터	: 	[id]
+	컨트롤러	:	com.koitt.www.controller.survey.SurveyResult
+	뷰			:	/com/koitt/www/survey/surveyResult.jsp
 	
 	
 =============================================================================

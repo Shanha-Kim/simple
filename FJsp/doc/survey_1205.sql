@@ -135,3 +135,55 @@ VALUES(
 );
 
 commit;
+
+
+
+SELECT
+    s_no
+FROM 
+    survey
+WHERE
+    sysdate BETWEEN s_start AND s_end
+;
+
+SELECT
+    s_no sno, s_title title, 
+    s_start startdate, s_end enddate, 
+    sq_no qno, sq_cont body
+FROM
+    survey, srv_quest
+WHERE
+    s_no = 1001
+    AND s_no = sq_sno
+;
+
+
+SELECT
+    s_no sno, s_title title,
+    s_start startdate, s_end enddate,
+    decode(
+            (
+                SELECT
+                    COUNT(*) CNT
+                FROM
+                    SRV_CK
+                WHERE
+                    SCK_ID = 'euns'
+                    AND SCK_SNO = 1001
+                        ), 0, 'N',
+                        'Y') COUNT
+FROM
+    survey, srv_ck
+WHERE
+    s_no = sck_sno
+    AND sck_mid = 'euns'
+;
+
+
+
+
+
+
+
+
+
