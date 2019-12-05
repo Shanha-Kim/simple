@@ -10,17 +10,41 @@
 <style>
 </style>
 <script type="text/javascript">
+	
+	$(document).ready(function(){
+		$('.btn').click(function(){
+			var ttl = $(this).prev().text();
+			var sname = $(this).html();
+			var sno = $(this).attr('id');
+			$('#sno').val(sno);
+			$('#title').val(ttl);
+			var target = '';
+			if(sname == '결 과'){
+				target = '/survey/surveyResult.cls';
+			} else if(sname == '참 여'){
+				target = '/survey/surveyDetail.cls';
+			}
+			$('#frm').attr('action', target);
+			$('#frm').submit();
+		});
+	});
 </script>
 </head>
 <body>
+	<form method="post" id="frm">
+		<input type="hidden" name="sno" id="sno">
+		<input type="hidden" name="sid" value="${SID}">
+		<input type="hidden" name="title" id="title">
+	</form>
+	
 	<div class="w3-col m3"><p></p></div>
 	<div class="w3-half">
-		<h3 class="w3-padding w3-lime">설문 조사 리스트</h3>
+		<h3 class="w3-padding w3-lime w3-center w3-card"><strong>설문 조사 리스트</strong></h3>
 		<div class="w3-col w3-margin-top">
 			
 			<div class="w3-col w3-card w3-round w3-margin-bottom w3-padding">
 				<c:forEach var="data" items="${LIST}">
-					<h3 class="w3-col m9">${data.title}</h3>
+					<h5 class="w3-col m9"> * ${data.title}</h5>
 					<c:if test="${data.check eq 'Y'}">
 						<div class="w3-col m2 w3-button w3-right btn w3-blue" id="${data.sno}">결 과</div>
 					</c:if>

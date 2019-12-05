@@ -60,7 +60,6 @@ public class SurveyDAO {
 				// 7. vo list에 담고
 				list.add(vo);
 			}
-			
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -70,6 +69,77 @@ public class SurveyDAO {
 		}
 		
 		// 8. 리스트 내보내고
+		return list;
+	}
+	
+	// 설문조사 상세내용 가져오기 전담 처리함수
+	public ArrayList<SurveyVO> getSDetailList(int sno){
+		ArrayList<SurveyVO> list = new ArrayList<SurveyVO>();
+		// 1. 커넥션 얻어오고
+		con = db.getCon();
+		// 2. 질의명령 가져오고
+		String sql = sSQL.getSQL(sSQL.SEL_QNO_LIST);
+		// 3. pstmt 얻어오고
+		pstmt = db.getPSTMT(con, sql);
+		ArrayList<Integer> qnoList = new ArrayList<Integer>();
+		try{
+			// 4. 질의명령완성하고
+			pstmt.setInt(1, sno);
+			// 5. 질의명령 보내고 결과받고 리스트에 담고
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				qnoList.add(rs.getInt("qno"));
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		con = db.getCon();
+		// 6. 질의명령 또 가져오고
+		sql = sSQL.getSQL(sSQL.SEL_QUEST_LIST);
+		pstmt = db.getPSTMT(con, sql);
+		try{
+			// 7. 질의명령 완성
+			for(int i = 0 ; i < qnoList.size() ; i++ ) {
+				pstmt.setInt(1, sno);
+				pstmt.setInt(2, qnoList.get(i));
+				
+				// 8. 보내고 결과받고 
+				rs = pstmt.executeQuery();
+				
+				// vo에 담고
+				SurveyVO vo = new SurveyVO(); // 문항데이터 저장할 vo
+				ArrayList<SurveyVO> sList = new ArrayList<SurveyVO>();
+				int j = 0;
+				while(rs.next()) {
+					if(j++ == 0) {
+						vo.setSno(rs.getInt("sno"));
+						vo.setQno(rs.getInt("qno"));
+						vo.setBody(rs.getString("body"));
+					}
+					SurveyVO svo = new SurveyVO(); // 보기데이터 저장할 vo
+					svo.setSeno(rs.getInt("seno"));
+					svo.setEbody(rs.getString("ebody"));
+					// list 에 담고
+					sList.add(svo);
+				}
+				vo.setList(sList);
+				
+				// list에 또 담고
+				list.add(vo);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(rs);
+			db.close(pstmt);
+			db.close(con);
+		}
+		
 		return list;
 	}
 }

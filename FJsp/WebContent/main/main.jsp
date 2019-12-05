@@ -148,6 +148,10 @@
 			$(location).attr('href', '/board/reboard.cls');
 		});
 		
+		$('#survey').click(function(){
+			$(location).attr('href', '/survey/survey.cls');
+		});
+		
 		
 /* 		
 		$('#memberEdit').click(function(){
@@ -170,9 +174,10 @@
 				<div class="w3-col m2 w3-pink w3-button" id="logout">로그아웃</div>
 				<div class="w3-col m2 w3-deep-purple w3-button" id="memberInfo">회원정보보기</div>
 				<!-- <div class="w3-col m2 w3-indigo w3-button" id="memberEdit">회원정보수정</div> -->
+				<div class="w3-col m2 w3-aqua w3-button" id="boardList">파일업로드게시판</div>
+				<div class="w3-col m2 w3-blue-grey w3-button" id="reboard">댓글게시판</div>
+				<div class="w3-col m2 w3-khaki w3-button" id="survey">설문조사</div>
 			</c:if>
-			<div class="w3-col m2 w3-aqua w3-button" id="boardList">파일업로드게시판</div>
-			<div class="w3-col m2 w3-blue-grey w3-button" id="reboard">댓글게시판</div>
 		</div>
 	</div>
 	

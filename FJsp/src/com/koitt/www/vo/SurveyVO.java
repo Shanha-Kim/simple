@@ -12,7 +12,9 @@ package com.koitt.www.vo;
  *
  */
 
+import java.util.*;
 import java.sql.*;
+import java.sql.Date;
 import java.text.*;
 
 public class SurveyVO {
@@ -38,6 +40,16 @@ public class SurveyVO {
 	private String sinvDate;
 	private Time invTime;	// 설문 참여 시간
 	private String sinvTime;
+	
+	private ArrayList<SurveyVO> list;
+	
+	public ArrayList<SurveyVO> getList() {
+		return list;
+	}
+	public void setList(ArrayList<SurveyVO> list) {
+		this.list = list;
+	}
+	
 	public int getSno() {
 		return sno;
 	}
