@@ -142,4 +142,60 @@ public class SurveyDAO {
 		
 		return list;
 	}
+	
+	// 설문보기 카운트 업데이트 전담 처리 함수
+	public int updateCount(ArrayList<Integer> no, String str, int sno, String sid) {
+		int cnt = 0;
+		// 1. 커넥션 얻어오고
+		con = db.getCon();
+		// 2. 질의명령 얻어오고
+		String sql = sSQL.getSQL(sSQL.UPDATE_CNT);
+		// 3. 질의명령 수정하고
+		sql = sql.replaceAll("###", str);
+		// 4. PreparedStatement 가져오고
+		pstmt = db.getPSTMT(con, sql);
+		try{
+			// 5. 질의명령 완성하고
+			for(int i = 0 ; i < no.size(); i++ ) {
+				pstmt.setInt(i + 1, no.get(i));
+			}
+			// 6. 질의명령 보내고
+			cnt = pstmt.executeUpdate();
+			if(cnt == no.size()) {
+				cnt = addSrvMemb(sno, sid);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+		
+		return cnt;
+	}
+	
+	// 설문 참여 데이터 저장 전담 처리함수
+	public int addSrvMemb(int sno, String sid) {
+		int cnt = 0;
+		// 1. 커넥션 얻고
+		con = db.getCon();
+		// 2. 질의명령 가져오고
+		String sql = sSQL.getSQL(sSQL.ADD_CHECK);
+		// 3. PreparedStatement 얻어오고
+		pstmt = db.getPSTMT(con, sql);
+		try {
+			// 4. 질의명령 완성하고
+			pstmt.setInt(1, sno);
+			pstmt.setString(2, sid);
+			// 5. 질의명령 보내고 결과 받고
+			cnt = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			db.close(pstmt);
+			db.close(con);
+		}
+		// 6. 결과 내보내고
+		return cnt;
+	}
 }

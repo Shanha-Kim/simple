@@ -168,16 +168,51 @@ SELECT
                 FROM
                     SRV_CK
                 WHERE
-                    SCK_ID = 'euns'
-                    AND SCK_SNO = 1001
-                        ), 0, 'N',
-                        'Y') COUNT
+                    SCK_SNO = s_no
+                    AND SCK_MID = 'euns'
+            ), 0, 'N',
+            'Y') COUNT
 FROM
-    survey, srv_ck
+    survey
 WHERE
-    s_no = sck_sno
-    AND sck_mid = 'euns'
+    sysdate BETWEEN s_start AND s_end
 ;
+
+SELECT
+    *
+FROM
+    SURVEY, SRV_CK
+;
+
+SELECT
+    COUNT(*) CNT
+FROM
+    SRV_CK
+WHERE
+    SCK_SNO = 1001
+;
+
+-- 이 질의명령은 설문번호를 선택한 후 
+-- 그 설문 번호로 데이터를 조회하는 질의명령
+-- 꺼내올 데이터는 설문번호, 설문문항번호, 설문문항내용, 설문보기번호, 설문보기내용
+SELECT
+    sq_sno sno, sq_no qno, sq_cont body, se_no seno, se_body ebody
+FROM
+    srv_quest, srv_ex
+WHERE
+    sq_no = se_qno -- 조인조건
+    AND sq_sno = 1001
+    --AND sq_no = 10001
+;
+
+SELECT
+    sq_no qno
+FROM
+    srv_quest
+WHERE
+    sq_sno = 1001
+;
+
 
 
 
