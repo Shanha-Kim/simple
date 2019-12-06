@@ -40,15 +40,8 @@ public class SurveyVO {
 	private String sinvDate;
 	private Time invTime;	// 설문 참여 시간
 	private String sinvTime;
-	
-	private String ex01;
-	private String ex02;
-	private String ex03;
-	private String ex04;
-	private int ex01_no;
-	private int ex02_no;
-	private int ex03_no;
-	private int ex04_no;
+	private int total;
+	private double per;
 	
 	// 문항의 보기 데이터를 저장할 목적으로 변수 만들기
 	private ArrayList<SurveyVO> list;
@@ -187,6 +180,18 @@ public class SurveyVO {
 	}
 	public void setSinvTime(String sinvTime) {
 		this.sinvTime = sinvTime;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	public double getPer() {
+		return per;
+	}
+	public void setPer(double per) {
+		this.per = per;
 	}
 	
 }
