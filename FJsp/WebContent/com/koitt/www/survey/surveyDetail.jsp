@@ -15,6 +15,18 @@
 	}
 </style>
 <script type="text/javascript">
+	$(document).ready(function(){
+		// 버튼 이벤트 처리
+		$('.btn').click(function(){
+			var str = $(this).text();
+			if(str == "제출"){
+				$('#frm').submit();
+			} else if(str == "취소"){
+				$(location).attr('href', '/main');
+			}
+		});
+		
+	});
 </script>
 </head>
 <body>
@@ -26,6 +38,9 @@
 				<input type="hidden" name="len" value="${LIST.size()}">
 				<input type="hidden" name="sid" value="${SID}">
 			<c:forEach var="data" items="${LIST}" varStatus="st">
+				<c:if test="${st.count eq 1}">
+					<input type="hidden" name="sno" value="${data.sno}">
+				</c:if>
 				<div class="w3-col"><h5>${st.count}. ${data.body}</h5></div>
 				<div class="w3-col m1"><p></p></div>
 				<div class="w3-col m11">

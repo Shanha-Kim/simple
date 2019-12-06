@@ -10,7 +10,7 @@ xml 문서는 내부에 반드시 로트 태그가 하나가 존재해야 한다
 <Context>
 	<Resource
 		name="jdbc/TestDB"
-		auto="Container"
+		author="Container"
 		type="javax.sql.DataSource"
 		maxTotal="8"
 		maxIdle="2"
@@ -22,7 +22,7 @@ xml 문서는 내부에 반드시 로트 태그가 하나가 존재해야 한다
 	/>
 	<Resource
 		name="TestDB"
-		auto="Container"
+		author="Container"
 		type="javax.sql.DataSource"
 		maxTotal="8"
 		maxIdle="2"
