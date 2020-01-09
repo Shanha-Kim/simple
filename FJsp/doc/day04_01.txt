@@ -1,0 +1,205 @@
+# day04_01.txt
+
+	JSTL 의 태그들
+		
+		1. <c:out>
+			==> 표현언어(EL)와 동일하게 뭔가를 출력하는 기능을 가진 태그
+			
+			형식]
+				<c:out value="출력내용" />
+				
+			예]
+				컨트롤러(자바클래스)에서 
+					req.setAttribute("NAME", "홍길동");
+				으로 전달하면
+				
+				<c:out value="${NAME}" />
+				
+		2. <c:set>
+			==> 변수에 데이터를 기억해 놓는 기능을 가진 태그
+			
+			형식]
+				<c:set var="변수이름" value="데이터" />
+				
+			예]
+				<c:set var="name" value="홍길동" />
+					==> String name = "홍길동";  의 의미가 된다.
+					
+					사용은...
+					${name}
+					
+			참고]
+				value의데이터는 무엇이 되어도 상관 없다.
+				예]
+					<c:set var="age" value="24" />
+					* 따옴표에 주의...
+					
+		3. <c:remove>
+			==> 변수의 데이터를 강제로 삭제하는 기능을 가진 태그
+			
+			형식]
+				<c:remove var="삭제할변수이름" />
+				
+			예]
+				<c:set var="age" value="23" />
+				
+				....
+				<c:remove var="age" />
+		
+		
+		******	
+		4. <c:if>
+			==> 자바의  if 명령을 태그로 만들어 놓은 것..
+			
+			형식]
+				<c:if test="조건식">
+					몸체
+				</c:if>
+				조건식이 참이면 몸체 부분을 실행하세요.
+				
+			참고]
+				이 조건식 태그는 else, else if 의 기능이 아직 존재하지 않는다.
+				따라서
+				else, else if 가 필요한 경우에는
+				반드시 <c:if>태그의 조건식을 경우에 맞게 작성해서 사용해야 한다.
+				
+				
+------------------------------------------------------------------------------------
+EL 연산자
+	
+	eq		==
+	ne		!=
+	lt		<
+	le		<=
+	gt		>
+	ge		>=
+	
+	and 	&&
+	or		||
+	not		!
+	
+	empty	- 데이터가 비어있냐??
+	예]
+		컨트롤러
+		ArrayList list = new ArrayList();
+		db에서 꺼낸 데이터를 list에 넣고
+		req.setAttribute("LIST", list);
+		
+		뷰
+		<c:if test="${empty LIST}">
+			리스트에 담긴 내용이 없습니다.
+		</c:if>
+
+------------------------------------------------------------------------------------
+		****
+		5. <c:choose>
+			==> 자바의 switch case 문과 유사한 기능을 가진 
+				다중 조건 처리 명령을 위한 태그
+				
+			형식]
+				<c:choose>
+					<c:when test="조건식">
+						처리내용
+					</c:when>
+					<c:when test="조건식">
+						처리내용
+					</c:when>
+					<c:when test="조건식">
+						처리내용
+					</c:when>
+					<c:when test="조건식">
+						처리내용
+					</c:when>
+					<c:otherwise>
+						처리내용
+					</c:otherwise>
+				</c:choose>
+				
+			참고]
+				한개라도 c:when 의 조건에 맞는다면 그것만 처리하고
+				c:choose 태그를 종료한다.
+				
+				
+				
+	**********
+	6. <c:forEach>
+		==> 자바의 for 명령을 태그로 만들어 놓은 기능
+		
+		형식 1 ]
+			<c:forEach var="변수" begin="시작값"  end="종료값" step="증가값" >
+			
+			</c:forEach>
+			
+			예]
+				for(int i = 1 ; i < 10 ; i++ ){
+				}
+				
+				==> 
+				<c:forEach var="i" begin="1" end="9" step="1">
+				</c:forEach>
+				
+			주의사항]
+				end의 값은 포함이 된다.
+				즉, end 값 까지 반복을 한다.
+				
+			참고]
+				step 의 경우 1이면 생략해도 된다. 기본이 1이다. 
+				
+				
+		형식 2 ]
+			<c:forEach var="변수이름" items="${컬렉션 혹은 배열}" >
+				처리내용
+			</c:forEach>
+			==> 향상된 for 명령과 비슷한 기능
+				컬렉션이나 배열에 들어있는 데이터를 하나씩 꺼내서 변수에 넣어준다.
+				모두 꺼낼때 까지....
+				
+		참고]
+			forEach 태그에는 varStatus 라는 속성을 사용할 수 있다.
+			이 속성은 반복상태를 기억하는 역할을 담당한다.
+			
+			예]
+				<c:forEach var=".." varStatus="변수">
+					지정한 변수에는 반복상태가 기억된다.
+				</c:forEach>
+				
+			반복상태
+				current	- 현재 꺼낸 데이터가 기억
+				index	- 현재 몇번째 반복인지 기억된다. 0 부터 카운트(인뎃스)
+				count	- 현재 몇번째 반복인지 기억되는데 1부터 카운트 (횟수)
+				first	- 현재 반복이 첫번째 반복인지 아닌지 참|거짓으로 기억
+				last	- 현재 반복이 마지막 반복인지 아닌지 참 |거짓으로 기억
+				begin	- 시작값
+				end		- 종료값
+				step	- 증감값
+				
+	7. <c:forToken>
+		==> 하나의 문자열을 지정한 기호로 분리시켜서 반복하는 태그
+			자바의 StringTokenizer 와 비슷한 역할을 한다.
+			
+		형식]
+			<c:forToken var="변수" items="데이터" delims="구분자">
+			</c:forToken>
+		
+		참고]
+			delims (구분자)에는 여러개의 구분문자를 동시에 사용할 수 있다.
+			
+			
+	8. <c:redirect>
+		==> 강제로 요청을 변경하는
+			response.sendRedirect() 에 해당하는 태그
+			
+		형식 1 ]
+			<c:redirect url="새로운요청주소" />
+			==> 일반적인 요청을 새로 만드는 방식
+			
+		형식 2 ]
+			<c:redirect url="새로운요청주소">
+				<c:param name="키값" value="데이터" />
+				<c:param name="키값" value="데이터" />
+				<c:param name="키값" value="데이터" />
+				...
+			</c:redirect>
+			==> 새로운 요청을 만들면서 부가 정보도 같이 제공하는 방식
+			
+		

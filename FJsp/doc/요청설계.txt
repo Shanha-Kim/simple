@@ -1,0 +1,51 @@
+
+1. 회원관련 요청
+	
+	1) 로그인 폼 요청
+		
+		요청내용	:	/member/login.nop
+		파라미터	:	무
+		컨트롤러	:	proj1.member.Login
+		뷰			:	/com/koitt/www/member/login.jsp ( forward 방식 처리 )
+		
+	2) 로그인 처리 요청
+		요청내용	:	/member/loginExec.nop
+		파라미터	: 	id , pw
+		클래스		:	proj1.member.LoginExec
+		뷰			:	
+						처리된 경우 - main.jsp ( redirect 방식 처리 )
+						처리가 안된 경우 -	login.nop ( redirect 방식 처리 )
+	
+	3) 회원가입 폼 요청
+		요청내용	:	/member/join.nop
+		파라미터	: 	무
+		컨트롤러		:	proj1.member.Join
+		뷰			:	/com/koitt/www/member/join.jsp	
+	
+	4) 회원가입 처리 요청
+		요청내용	:	/member/joinExec.nop
+		파라미터	: 	id, pw, name, tel, mail
+		컨트롤러	:	proj1.member.JoinExec
+		뷰			:	
+						실패한 경우 - /com/koitt/www/member/join.jsp ( REDIRECT )
+						성공한 경우	- / ( REDIRECT ) 	
+	
+	5) 회원아이디 체크 요청 - 비동기 처리( Ajax 처리 )
+		요청내용	:	/member/idCheck.ck
+		파라미터	: 	id
+		전송방식	:	json
+		컨트롤러	:	proj1.member.IdCheck
+		뷰			:	무
+
+	6) 회원리스트 페이지 요청
+		요청내용	:	/member/memberList.nop
+		파라미터	: 	무
+		컨트롤러	:	proj1.member.MemberList
+		뷰			:	/com/koitt/www/member/memberList.jsp
+		
+	7) 회원 정보 조회 요청 - 비동기 통신
+		요청내용	:	/member/membDetail.nop
+		파라미터	: 	mno
+		전송방식	: 	json
+		컨트롤러	:	proj1.member.MembDetail
+		뷰			:	none
